@@ -10,6 +10,12 @@
 
 ---
 
+## 🏗️ Architecture
+
+![System Architecture Diagram](screenshots/system%20architecture.png)
+
+---
+
 ## 🎯 Overview
 
 This lab deploys an intentionally vulnerable Azure VM (honeypot) to the public internet, monitors failed RDP/SSH brute-force attempts, enriches events with geolocation data, and visualizes attack origins on an interactive map within Microsoft Sentinel.
@@ -19,40 +25,6 @@ This lab deploys an intentionally vulnerable Azure VM (honeypot) to the public i
 - SIEM platform hands-on experience
 - Understanding real-world SOC workflows
 - Learning KQL (Kusto Query Language)
-
----
-
-## 🏗️ Architecture
-
-```
-+-------------------+        RDP/SSH Brute Force
-|   Internet / WAN  | ---------------------------------------->
-+-------------------+                                          |
-                                                                v
-                                               +--------------------------------+
-                                               |  Azure VM (Honeypot)           |
-                                               |  Windows 10/Server             |
-                                               |  Firewall: ALL INBOUND OPEN    |
-                                               +----------------+---------------+
-                                                                |
-                                               Event Logs (4625 Failed Logons)
-                                                                |
-                                                                v
-                                               +--------------------------------+
-                                               |  Log Analytics Workspace       |
-                                               |  (SecurityEvent table)         |
-                                               +----------------+---------------+
-                                                                |
-                                               KQL Query + GeoIP Watchlist Join
-                                                                |
-                                                                v
-                                               +--------------------------------+
-                                               |  Microsoft Sentinel            |
-                                               |  - Workbooks (Attack Map)      |
-                                               |  - Analytics Rules             |
-                                               |  - Incidents & Alerts          |
-                                               +--------------------------------+
-```
 
 ---
 
@@ -168,6 +140,7 @@ azure-soc-honeypot/
 ├── kql-queries/
 │   └── failed_logons.kql              ← 10+ query examples
 ├── screenshots/
+│   ├── system architecture.png        ← Architecture diagram
 │   ├── attack-map.webp                ← Live threat map
 │   ├── kql-results.webp               ← Query output
 │   └── resource group.webp            ← Azure deployment
